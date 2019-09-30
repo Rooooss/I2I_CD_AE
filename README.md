@@ -26,6 +26,7 @@ $ python new_main_correct.py --phase test --dataset_dir maps --which_direction A
 ```
 
 ## Results
-![results_paper](https://user-images.githubusercontent.com/36982015/65853364-38419d80-e394-11e9-8313-70a4c88f8b29.jpg)
+![results_paper](https://user-images.githubusercontent.com/36982015/65853430-6f17b380-e394-11e9-994b-31c904f7276b.jpg)
+
 
 

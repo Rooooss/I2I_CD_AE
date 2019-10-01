@@ -14,7 +14,10 @@ This repository contains the official TensorFlow implementation of the following
 * pre-trained encoder and decoder weights must be located in save_photo\"dataset_name"_256\ (for domain A) and save_label/"dataset_name"_256/ (for domain B).
 * dataset must be located in datasets/"dataset_name".
 * You can download Cityscapes, horse2zebra, Maps and other useful datasets : [[Download](https://people.eecs.berkeley.edu/~taesung_park/CycleGAN/datasets/)]
-* You can download cat2dog dataset here: [[Download](https://github.com/brownvc/ganimorph/)]
+* You can download cat2dog dataset(link->google drive->dataset->cat_dog_face) here: [[Download](https://github.com/brownvc/ganimorph/)]
+* For test, you can download checkpoint files [[download](https://mega.nz/#!J1pDBYhJ!3UYRPpRKOeXdKJMZefpwNEVh4ZMZb5o_f-cCXvY5vKo)] and move them to checkpoint/cat2dog_256/.
+
+   (example: checkpoint/cat2dog_256/checkpoint, cyclegan.model-1644002.data-00000-of-00001, ...) . 
 
 ##### Train Example:
 ```bash
@@ -24,6 +27,7 @@ $ python new_main_correct.py --phase train --dataset_dir maps --epoch 200 --batc
 ```bash
 $ python new_main_correct.py --phase test --dataset_dir maps --which_direction AtoB --batch_size 1
 ```
+
 
 ## Results
 ![results_paper](https://user-images.githubusercontent.com/36982015/65853430-6f17b380-e394-11e9-994b-31c904f7276b.jpg)

@@ -9,6 +9,17 @@ This repository contains the official TensorFlow implementation of the following
 > 
 > **Abstract:** *Recently, a number of studies have focused on image-to-image translation. However, the quality of the translation results is lacking in certain respects. We propose a new image-to-image translation method to minimize such shortcomings using an auto-encoder and an auto-decoder. This method includes pre-training two auto-encoder and decoder pairs for each source and target image domain, cross-connecting two pairs and adding a feature mapping layer. Our method is quite simple and straightforward to adopt but very effective in practice, and we experimentally demonstrate that our method can significantly enhance the quality of image-to-image translation. We use the well-known cityscapes, horse2zebra, cat2dog, maps, summer2winter, and night2day datasets. Our method shows qualitative and quantitative improvements over existing models.*
 
+
+## Development Environment
+### NVIDIA GeForce RTX2070
+### Cuda 10.0
+### CuDNN 7.5.1
+### Python 3.6.9
+### Tensorflow-gpu 1.13.1
+### scipy 1.1.0
+### pillow 6.1.0
+
+
 ## Usage
 ### Train / Test
 * pre-trained encoder and decoder weights must be located in save_photo\"dataset_name"_256\ (for domain A) and save_label/"dataset_name"_256/ (for domain B).

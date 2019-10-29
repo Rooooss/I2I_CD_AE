@@ -44,13 +44,15 @@ def main(_):
     g1 = tf.Graph()
     g2 = tf.Graph()
 
+    # load graph of X2X auto-encoder.
     with tf.Session(graph=g1) as sess1:
         model1 = auto_model.cyclegan(sess1, args)
         model1.load('save_photo/'+args.dataset_dir+'_256')
         trainable = tf.trainable_variables()
         values1 = sess1.run(trainable)
         v1 = list(zip(trainable, values1))
-
+    
+    # load graph of Y2Y auto-encoder.
     with tf.Session(graph=g2) as sess2:
         model2 = auto_model.cyclegan(sess2, args)
         model2.load('save_label/'+args.dataset_dir+'_256')

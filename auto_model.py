@@ -46,11 +46,14 @@ class cyclegan(object):
                                          self.input_c_dim + self.output_c_dim],
                                         name='real_A_and_B_images')
 
+        # real_A and real_B are X and Y images
         self.real_A = self.real_data[:, :, :, :self.input_c_dim]
         self.real_B = self.real_data[:, :, :, self.input_c_dim:self.input_c_dim + self.output_c_dim]
-
-        self.fake_A = self.generator(self.real_B, self.options, False, name="generatorzA2A") # real_A 를 넣으면 A 학습, real_B를 넣으면 B 학습
-        self.g_loss = abs_criterion(self.real_B, self.fake_A) # real_A 를 넣으면 A 학습, real_B를 넣으면 B 학습
+        
+        # if you want to train auto-encoder with input X and output X, you should set first argument to real_A at the following two lines.
+        # and if you want to train auto-encoder with input Y and output Y, you should set first argument to real_B at the following two lines.
+        self.fake_A = self.generator(self.real_B, self.options, False, name="generatorzA2A") 
+        self.g_loss = abs_criterion(self.real_B, self.fake_A)
         self.g_loss_sum = tf.summary.scalar("g_loss", self.g_loss)
 
         t_vars = tf.trainable_variables()

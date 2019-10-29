@@ -120,7 +120,8 @@ def generator_resnet(image, options, reuse=False, name="generator"):
             tf.get_variable_scope().reuse_variables()
         else:
             assert tf.get_variable_scope().reuse is False
-
+            
+        # This is a block composed of 2 convolution layer and residual connection.
         def residule_block(x, dim, ks=3, s=1, name='res'):
             p = int((ks - 1) / 2)
             y = tf.pad(x, [[0, 0], [p, p], [p, p], [0, 0]], "REFLECT")
@@ -139,23 +140,23 @@ def generator_resnet(image, options, reuse=False, name="generator"):
             #y = instance_norm(conv2d(y, dim, ks, s, padding='VALID', name=name+'_c2'), name+'_bn2')
             return y + x
 
-        # Justin Johnson's model from https://github.com/jcjohnson/fast-neural-style/
-        # The network with 9 blocks consists of: c7s1-32, d64, d128, R128, R128, R128,
-        # R128, R128, R128, R128, R128, R128, u64, u32, c7s1-3
+        # c0 - c3 and r1 - r5 are encoder of generator networks.
         c0 = tf.pad(image, [[0, 0], [3, 3], [3, 3], [0, 0]], "REFLECT")
         c1 = tf.nn.relu(instance_norm(conv2d(c0, options.gf_dim, 7, 1, padding='VALID', name='g_e1_c'), 'g_e1_bn'))
         c2 = tf.nn.relu(instance_norm(conv2d(c1, options.gf_dim*2, 3, 2, name='g_e2_c'), 'g_e2_bn'))
         c3 = tf.nn.relu(instance_norm(conv2d(c2, options.gf_dim*4, 3, 2, name='g_e3_c'), 'g_e3_bn'))
-        # define G network with 9 resnet blocks
+
         r1 = residule_block(c3, options.gf_dim*4, name='g_r1')
         r2 = residule_block(r1, options.gf_dim*4, name='g_r2')
         r3 = residule_block(r2, options.gf_dim*4, name='g_r3')
         r4 = residule_block(r3, options.gf_dim*4, name='g_r4')
         r5 = residule_block(r4, options.gf_dim * 4, name='g_r5')
 
+        # it is a feature mapping layer used to connect encoder and decoder network.
         temp = tf.nn.relu(instance_norm(conv2d(r5, options.gf_dim * 4, ks=1, s=1, padding='SAME', name='temp')))
         temp = temp + r5
 
+        # r6 - r10, d1 - pred are decoder of generator networks.
         r6 = residule_block(temp, options.gf_dim*4, name='g_r6')
         r7 = residule_block(r6, options.gf_dim*4, name='g_r7')
         r8 = residule_block(r7, options.gf_dim*4, name='g_r8')
